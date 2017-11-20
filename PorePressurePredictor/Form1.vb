@@ -10,7 +10,7 @@ Public Class Form1
     Dim tables As DataTableCollection
     Dim source1 As New BindingSource
 
-    Dim fieldSlope, fieldIntercept As Double
+    Dim fieldSlope, fieldIntercept As Decimal
 
     Dim dbPath = Environment.GetEnvironmentVariable("APPDATA")
     'Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) '& "\CreatedFolder\Resources\DatabaseFile.accdb"
@@ -132,7 +132,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub ToolStripTextBox1_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox1.Click
+    Private Sub ToolStripTextBox1_Click(sender As Object, e As EventArgs)
 
     End Sub
 
@@ -301,42 +301,42 @@ Public Class Form1
                         sqlquery.Connection = sqlconn
                         sqlconn.Open()
                         sqlquery.CommandText = "INSERT INTO " & fieldName & "([TVD_ft], [D_EXPONENT_NORMAL], [D_EXPONENT_OBSERVED], [OVERBURDEN_PRES_GRAD_Psf], [NORMAL_PRES_GRAD_Psf], [PP_SG], [MDT_PP_Psi], [BEN_EATON_Psf], [BEN_EATON_Psi], [BEN_EATON_ERROR_EST], [NWEKE_DOSUMU_Psf], [NWEKE_DOSUMU_Psi], [NWEKE_DOSUMU_ERROR_EST], [REHM_McCLENDON_Ppg], [REHM_McCLENDON_Psi], [REHM_McCLENDON_ERROR_EST])VALUES(@TVD_ft, @D_EXPONENT_NORMAL, @D_EXPONENT_OBSERVED, @OVERBURDEN_PRES_GRAD_Psf, @NORMAL_PRES_GRAD_Psf, @PP_SG, @MDT_PP_Psi, @BEN_EATON_Psf, @BEN_EATON_Psi, @BEN_EATON_ERROR_EST, @NWEKE_DOSUMU_Psf, @NWEKE_DOSUMU_Psi, @NWEKE_DOSUMU_ERROR_EST, @REHM_McCLENDON_Ppg, @REHM_McCLENDON_Psi, @REHM_McCLENDON_ERROR_EST)"
-                        sqlquery.Parameters.AddWithValue("@TVD_ft", dr(0))
-                        sqlquery.Parameters.AddWithValue("@D_EXPONENT_NORMAL", dr(1))
-                        sqlquery.Parameters.AddWithValue("@D_EXPONENT_OBSERVED", dr(2))
-                        sqlquery.Parameters.AddWithValue("@OVERBURDEN_PRES_GRAD_Psf", dr(3))
-                        sqlquery.Parameters.AddWithValue("@NORMAL_PRES_GRAD_Psf", dr(4))
-                        sqlquery.Parameters.AddWithValue("@PP_SG", dr(5))
+                        sqlquery.Parameters.AddWithValue("@TVD_ft", Decimal.Round(dr(0), 2))
+                        sqlquery.Parameters.AddWithValue("@D_EXPONENT_NORMAL", Decimal.Round(dr(1), 2))
+                        sqlquery.Parameters.AddWithValue("@D_EXPONENT_OBSERVED", Decimal.Round(dr(2), 2))
+                        sqlquery.Parameters.AddWithValue("@OVERBURDEN_PRES_GRAD_Psf", Decimal.Round(dr(3), 2))
+                        sqlquery.Parameters.AddWithValue("@NORMAL_PRES_GRAD_Psf", Decimal.Round(dr(4), 2))
+                        sqlquery.Parameters.AddWithValue("@PP_SG", Decimal.Round(dr(5), 2))
 
-                        Dim pp_mdt As Double = 0.433 * dr(5) * dr(0)
-                        sqlquery.Parameters.AddWithValue("@MDT_PP_Psi", pp_mdt)
+                        Dim pp_mdt As Decimal = 0.433 * dr(5) * dr(0)
+                        sqlquery.Parameters.AddWithValue("@MDT_PP_Psi", Decimal.Round(pp_mdt, 2))
 
                         'Ben Eaton
-                        Dim bem_psf As Double = dr(3) - (dr(3) - dr(4)) * (dr(2) / dr(1)) ^ 1.2
-                        Dim bem_psi As Double = bem_psf * dr(0)
-                        Dim bem_err_est As Double = ((bem_psi - pp_mdt) / bem_psi) * 100
+                        Dim bem_psf As Decimal = dr(3) - (dr(3) - dr(4)) * (dr(2) / dr(1)) ^ 1.2
+                        Dim bem_psi As Decimal = bem_psf * dr(0)
+                        Dim bem_err_est As Decimal = ((bem_psi - pp_mdt) / bem_psi) * 100
 
-                        sqlquery.Parameters.AddWithValue("@BEN_EATON_Psf", bem_psf)
-                        sqlquery.Parameters.AddWithValue("@BEN_EATON_Psi", bem_psi)
-                        sqlquery.Parameters.AddWithValue("@BEN_EATON_ERROR_EST", bem_err_est)
+                        sqlquery.Parameters.AddWithValue("@BEN_EATON_Psf", Decimal.Round(bem_psf, 2))
+                        sqlquery.Parameters.AddWithValue("@BEN_EATON_Psi", Decimal.Round(bem_psi, 2))
+                        sqlquery.Parameters.AddWithValue("@BEN_EATON_ERROR_EST", Decimal.Round(bem_err_est, 2))
 
                         'Nweke Dosunmu
-                        Dim nwe_dos_psf As Double = dr(3) - (dr(3) - dr(4)) * (dr(2) / dr(1)) ^ 1
-                        Dim nwe_dos_psi As Double = nwe_dos_psf * dr(0)
-                        Dim nwe_dos_est As Double = ((nwe_dos_psi - pp_mdt) / nwe_dos_psi) * 100
+                        Dim nwe_dos_psf As Decimal = dr(3) - (dr(3) - dr(4)) * (dr(2) / dr(1)) ^ 1
+                        Dim nwe_dos_psi As Decimal = nwe_dos_psf * dr(0)
+                        Dim nwe_dos_est As Decimal = ((nwe_dos_psi - pp_mdt) / nwe_dos_psi) * 100
 
-                        sqlquery.Parameters.AddWithValue("@NWEKE_DOSUMU_Psf", nwe_dos_psf)
-                        sqlquery.Parameters.AddWithValue("@NWEKE_DOSUMU_Psi", nwe_dos_psi)
-                        sqlquery.Parameters.AddWithValue("@NWEKE_DOSUMU_ERROR_EST", nwe_dos_est)
+                        sqlquery.Parameters.AddWithValue("@NWEKE_DOSUMU_Psf", Decimal.Round(nwe_dos_psf, 2))
+                        sqlquery.Parameters.AddWithValue("@NWEKE_DOSUMU_Psi", Decimal.Round(nwe_dos_psi, 2))
+                        sqlquery.Parameters.AddWithValue("@NWEKE_DOSUMU_ERROR_EST", Decimal.Round(nwe_dos_est, 2))
 
                         'Rehm and McClendon
-                        Dim rehm_mccl_ppg As Double = 7.65 * (Math.Log10(dr(1) - dr(2))) + 16.5
-                        Dim rehm_mccl_psi As Double = 0.052 * rehm_mccl_ppg * dr(0)
-                        Dim rehm_mccl_err_est As Double = ((rehm_mccl_psi - pp_mdt) / rehm_mccl_psi) * 100
+                        Dim rehm_mccl_ppg As Decimal = 7.65 * (Math.Log10(dr(1) - dr(2))) + 16.5
+                        Dim rehm_mccl_psi As Decimal = 0.052 * rehm_mccl_ppg * dr(0)
+                        Dim rehm_mccl_err_est As Decimal = ((rehm_mccl_psi - pp_mdt) / rehm_mccl_psi) * 100
 
-                        sqlquery.Parameters.AddWithValue("@REHM_McCLENDON_Ppg", rehm_mccl_ppg)
-                        sqlquery.Parameters.AddWithValue("@REHM_McCLENDON_Psi", rehm_mccl_psi)
-                        sqlquery.Parameters.AddWithValue("@REHM_McCLENDON_ERROR_EST", rehm_mccl_err_est)
+                        sqlquery.Parameters.AddWithValue("@REHM_McCLENDON_Ppg", Decimal.Round(rehm_mccl_ppg, 2))
+                        sqlquery.Parameters.AddWithValue("@REHM_McCLENDON_Psi", Decimal.Round(rehm_mccl_psi, 2))
+                        sqlquery.Parameters.AddWithValue("@REHM_McCLENDON_ERROR_EST", Decimal.Round(rehm_mccl_err_est, 2))
 
 
                         sqlquery.ExecuteNonQuery()
@@ -380,7 +380,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub ToolStripComboBox1_Click(sender As Object, e As EventArgs) Handles ToolStripComboBox1.Click
+    Private Sub ToolStripComboBox1_Click(sender As Object, e As EventArgs)
 
     End Sub
 
@@ -388,7 +388,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub ToolStripComboBox2_Click(sender As Object, e As EventArgs) Handles ToolStripComboBox2.Click
+    Private Sub ToolStripComboBox2_Click(sender As Object, e As EventArgs)
 
     End Sub
 
@@ -425,6 +425,7 @@ Public Class Form1
 
                 For Each dr As DataRow In exceldts.Tables(0).Rows
                     dr(1) = findPressureAtDepth(dr(0))
+                    dr(0) = Decimal.Round(dr(0), 2)
                 Next
 
                 DataGridView1.DataSource = exceldts
@@ -494,6 +495,9 @@ Public Class Form1
                 Chart1.Series.Add(ben_series)
                 Chart1.Series.Add(nweke_series)
 
+                Chart1.ChartAreas("ChartArea1").AxisX.Title = "Depth, ft"
+                Chart1.ChartAreas("ChartArea1").AxisY.Title = "Pore Pressure, Psi"
+
             Catch ex As Exception
                 MessageBox.Show(ex.Message)
             End Try
@@ -513,10 +517,10 @@ Public Class Form1
         da = New OleDbDataAdapter("Select TVD_ft, NWEKE_DOSUMU_Psi from " & fieldName, MyConn)
         da.Fill(ds, fieldName)
 
-        Dim totalDepth, totalPressure, meanDepth, meanPressure As Double
+        Dim totalDepth, totalPressure, meanDepth, meanPressure As Decimal
         Dim entryCount As Integer
-        Dim totalDepthMeanDeviation, totalPressureMeanDeviation, totalDepthPressureDeviationProduct As Double
-        Dim totalDepthDeviationSquared, totalPressureDeviationSquared As Double
+        Dim totalDepthMeanDeviation, totalPressureMeanDeviation, totalDepthPressureDeviationProduct As Decimal
+        Dim totalDepthDeviationSquared, totalPressureDeviationSquared As Decimal
 
         entryCount = 0
         totalDepth = 0
@@ -550,7 +554,7 @@ Public Class Form1
 
         Next
 
-        Dim depthVariance, depthStandardDeviation, pressureVariance, pressureStandardDeviation, rankCorrelation As Double
+        Dim depthVariance, depthStandardDeviation, pressureVariance, pressureStandardDeviation, rankCorrelation As Decimal
 
         depthVariance = totalDepthDeviationSquared / entryCount
         depthStandardDeviation = Math.Sqrt(depthVariance)
@@ -560,19 +564,19 @@ Public Class Form1
 
         rankCorrelation = totalDepthPressureDeviationProduct / Math.Sqrt(totalDepthDeviationSquared * totalPressureDeviationSquared)
 
-        fieldSlope = rankCorrelation * pressureStandardDeviation / depthStandardDeviation
-        fieldIntercept = meanPressure - (fieldSlope * meanDepth)
+        fieldSlope = Decimal.Round(rankCorrelation * pressureStandardDeviation / depthStandardDeviation, 2)
+        fieldIntercept = Decimal.Round(meanPressure - (fieldSlope * meanDepth), 2)
 
         MsgBox("Field Slope:  " & fieldSlope & Chr(13) & "Field Intercept: " & fieldIntercept)
 
     End Sub
 
-    Function findPressureAtDepth(ByVal mDepth As Double) As Double
+    Function findPressureAtDepth(ByVal mDepth As Double) As Decimal
 
-        Dim result As Double
+        Dim result As Decimal
         result = fieldSlope * mDepth + fieldIntercept
 
-        findPressureAtDepth = result
+        findPressureAtDepth = Decimal.Round(result, 2)
     End Function
 
 End Class

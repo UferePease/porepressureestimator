@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PorePressurePredictor.exe" size="87520">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PorePressurePredictor.exe" size="85984">
       <assemblyIdentity name="PorePressurePredictor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ckH/c7Q+VPRXf3SKjMenB2JI/Mdyrle20zFy5pUah/Q=</dsig:DigestValue>
+        <dsig:DigestValue>xmA47RHp3RsAQzooTzX4ndEakYstPeJSJ0zSNl8VqGE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
